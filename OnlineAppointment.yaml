@@ -1,0 +1,33 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockerproject-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DockerProject
+  template:
+    metadata:
+      labels:
+        app: DockerProject
+    spec:
+      containers:
+      - name: DockerProjectRepos
+        image: dnazureacr.azurecr.io/DockerProjectRepos:latest
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: dsconfigsn
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dockerproject
+spec:
+  type: dockerproject
+  ports:
+  - port: 80
+  selector:
+    app: dockerproject 
